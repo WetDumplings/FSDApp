@@ -50,9 +50,9 @@ BookingActivity extends AppCompatActivity {
         btnBookEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Event newEvent = new Event(txtEventName.getText().toString(), txtAdminEmail.getText().toString(), Integer.valueOf(txtNoPpl.getText().toString()));
+               // Event newEvent = new Event(txtEventName.getText().toString(), txtAdminEmail.getText().toString(), Integer.valueOf(txtNoPpl.getText().toString()));
                 if (ValidateData()) {
-                    eventID = saveData(newEvent, database);
+                    //eventID = saveData(newEvent, database);
                     ShowDialog("Booking confirmation","Booking has been made. We will follow up with an email shortly!");
                     btnCheckDetails.setVisibility(View.VISIBLE);
                     btnAdminPage.setVisibility(View.VISIBLE);
@@ -159,8 +159,8 @@ BookingActivity extends AppCompatActivity {
         DatabaseReference referenceAdminEmail = database.getReference("Events").child(key).child("eventAdminEmail");
         referenceName.setValue(e.getEventName());
         referenceEventID.setValue(e.getEventID());
-        referenceNoOfPpl.setValue(e.getEventExpectedNoOfPpl());
-        referenceAdminEmail.setValue(e.getEventAdminEmail());
+        /*referenceNoOfPpl.setValue(e.getEventExpectedNoOfPpl());
+        referenceAdminEmail.setValue(e.getEventAdminEmail());*/
         return e.getEventID();
 
     }

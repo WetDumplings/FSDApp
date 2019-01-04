@@ -11,12 +11,12 @@ public class Player {
     }
 
 
-    public void GenerateTeam(){
+    /*public void GenerateTeam(){
         if (currentEvent.getnumberofTeams() < currentEvent.getMaxnumberofTeams()){
             Team Teamx = new Team(currentEvent.getEventID(),this,currentEvent.getnumberofTeams());
             Event NewEvent = selectmenu.
         }
-    }
+    }*/
 }
 
 
