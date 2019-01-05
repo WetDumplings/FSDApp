@@ -29,15 +29,58 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Random;
+
 public class Team {
     private String TeamID;
-    private Player Leader;
-    private Player Player2;
-    private Player Player3;
-    private Player Player4;
+    private String LeaderID;
+    private String Player2ID;
+    private String Player3ID;
+    private String Player4ID;
+    private String AuthCode;
+    private String Teamname;
 
-    public Team(int eventID, Player leader, int numofTeams){
-        TeamID = String.valueOf(eventID) + "-" + String.valueOf(numofTeams+1);
-        Leader = leader;
+    public Team(String Name, String AuthCodes){
+        /*TeamID = String.valueOf(eventID) + "-" + String.valueOf(numofTeams+1);
+        LeaderID = leader;*/
+        AuthCode = AuthCodes;
+        Teamname = Name;
+    }
+
+    public String GenerateCode(){
+        char[] chars1 = "ABCDEF012GHIJKL345MNOPQR678STUVWXYZ9".toCharArray();
+        StringBuilder sb1 = new StringBuilder();
+        Random random1 = new Random();
+        for (int i = 0; i < 6; i++)
+        {
+            char c1 = chars1[random1.nextInt(chars1.length)];
+            sb1.append(c1);
+        }
+        String random_string = sb1.toString();
+        return random_string;
+    }
+
+    public String getLeaderID() {
+        return LeaderID;
+    }
+
+    public String getTeamID() {
+        return TeamID;
+    }
+
+    public void setAuthCode(String authCode) {
+        AuthCode = authCode;
+    }
+
+    public void setTeamname(String teamname) {
+        Teamname = teamname;
+    }
+
+    public String getTeamname() {
+        return Teamname;
+    }
+
+    public String getAuthCode() {
+        return AuthCode;
     }
 }

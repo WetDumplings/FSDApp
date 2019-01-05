@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +32,11 @@ public class selectmenu extends AppCompatActivity {
     EditText inviteCode;
     TextView textview2;
     Integer eventID;
+    SharedPreferences mPref;
+    SharedPreferences.Editor mEditor;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference defReference = database.getReference("Events");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,7 @@ public class selectmenu extends AppCompatActivity {
         btnJoin = findViewById(R.id.btnJoinSelect);
         btnBook = findViewById(R.id.btnBook);
         btnAdminPage = findViewById(R.id.btnAdminPage);
-
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
         textview2 = findViewById(R.id.textView2);
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +112,12 @@ public class selectmenu extends AppCompatActivity {
                     int eventID = (ds.child("eventID").getValue(Integer.class));
                     if (eventID == eventIDCurrent) {
                         Event NewEvent = new Event(eventID);
+                        mEditor = mPref.edit();
+                        mEditor.putInt("EventID",eventID);
+                        String android_id = Settings.Secure.getString(getContentResolver(),
+                                Settings.Secure.ANDROID_ID);
+                        mEditor.putString("AndroidID",android_id);
+                        mEditor.commit();
 
                         Intent intent = new Intent(getApplicationContext(), normaluserwaitingscreen.class);
 

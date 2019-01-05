@@ -1,11 +1,12 @@
 package com.danielappdev.fosterships;
 
+import android.app.Application;
 import android.util.Log;
 
 import java.util.Random;
 
 
-public class Event {
+public class Event extends Application {
     private static int eventID;
     private String eventName;
 
