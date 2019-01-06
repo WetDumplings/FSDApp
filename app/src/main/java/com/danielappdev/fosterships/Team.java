@@ -40,11 +40,11 @@ public class Team {
     private String AuthCode;
     private String Teamname;
 
-    public Team(String Name, String AuthCodes){
+    public Team(/*String Name, String AuthCodes*/){
         /*TeamID = String.valueOf(eventID) + "-" + String.valueOf(numofTeams+1);
-        LeaderID = leader;*/
+        LeaderID = leader;
         AuthCode = AuthCodes;
-        Teamname = Name;
+        Teamname = Name;*/
     }
 
     public String GenerateCode(){
@@ -73,8 +73,9 @@ public class Team {
     }
 
     public void setTeamname(String teamname) {
+        if (teamname != null){
         Teamname = teamname;
-    }
+    }}
 
     public String getTeamname() {
         return Teamname;

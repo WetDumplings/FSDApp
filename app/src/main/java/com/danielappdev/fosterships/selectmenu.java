@@ -118,7 +118,7 @@ public class selectmenu extends AppCompatActivity {
                                 Settings.Secure.ANDROID_ID);
                         mEditor.putString("AndroidID",android_id);
                         mEditor.commit();
-
+                        Log.d("myTag", "This is my message");
                         Intent intent = new Intent(getApplicationContext(), normaluserwaitingscreen.class);
 
                         startActivity(intent);

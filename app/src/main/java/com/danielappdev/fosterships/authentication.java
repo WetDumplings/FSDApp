@@ -36,7 +36,7 @@ public class authentication extends AppCompatActivity {
     int EventID;
     String TeamName;
     TextView texts;
-    Team CurTeam;
+    Team CurTeam = new Team();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +51,8 @@ public class authentication extends AppCompatActivity {
 
         texts = (TextView)findViewById(R.id.textView10);
         getteamDetails();
-        TeamName = mPref.getString("TeamName","default");
-        if (TeamName == null){
-            texts.setText("000");
-        }
-        else{
-            texts.setText("works");}
+        texts.setText(CurTeam.getTeamname());
+
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,14 +98,16 @@ public class authentication extends AppCompatActivity {
     public void getteamDetails(){
 
         DatabaseReference EventRef = database.getReference(String.valueOf("Events"));
-        EventRef.child(String.valueOf(EventID)).child("Teams").addValueEventListener(new ValueEventListener() {
+        EventRef.child(String.valueOf(EventID)).child("Teams").addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot s1 : dataSnapshot.getChildren()) {
 
                         if (s1.child("Members").child(Android_ID).exists()) {
                              final String Teams = String.valueOf(s1.child("TeamName").getValue());
-                             mEditor.putString("TeamName",Teams);
+                             CurTeam.setTeamname(Teams);
+                             //texts.setText("okokoko");
+
                              break;
 
                             //String role = String.valueOf(snapshot.child("Members").child(Android_ID).child("role").getValue());
