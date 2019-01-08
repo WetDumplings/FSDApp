@@ -81,10 +81,10 @@ public class normaluserwaitingscreen extends AppCompatActivity {
                     HashMap<String, Object> Member = new HashMap<>();
                     Member.put("Player1",android_id);
                     defReference.child(String.valueOf(eventID)).child("Teams").child("Team Banana").child("Members").updateChildren(Member);
-                }*/
+                }
 
                 Intent intent = new Intent(getApplicationContext(),authentication.class);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         }.start();
     }

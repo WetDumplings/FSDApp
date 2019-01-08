@@ -49,7 +49,7 @@ public class Leaderboards extends AppCompatActivity {
         DatabaseReference referenceGroupName = database.getReference("Leaderboards").child(key).child("GroupName");
         DatabaseReference referenceScore = database.getReference("Leaderboards").child(key).child("Score");
         referenceRanking.setValue("1");
-        referenceGroupName.setValue("Team banana");
+        referenceGroupName.setValue("Team Banana");
         referenceScore.setValue("400");
 
     }
