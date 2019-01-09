@@ -13,11 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.provider.Settings.Secure;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -26,6 +31,8 @@ public class normaluserwaitingscreen extends AppCompatActivity {
     SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
     int eventID;
+    ArrayList<String> PlayerList = new ArrayList<String>();
+    ArrayList<Team> TeamList = new ArrayList<Team>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference defReference = database.getReference("Events"); //Initial root reference
     //TextView tv_timer = findViewById(R.id.tv_timer);
@@ -34,6 +41,7 @@ public class normaluserwaitingscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normaluserwaitingscreen);
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
+
         ConstraintLayout rlayout = (ConstraintLayout) findViewById(R.id.normaluserswaitingscreenlayout);
         rlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,5 +95,49 @@ public class normaluserwaitingscreen extends AppCompatActivity {
                 startActivity(intent);*/
             }
         }.start();
+    }
+
+
+    public void GetPlayers(){
+        eventID = mPref.getInt("EventID",0);
+        defReference.child(String.valueOf(eventID)).child("Players").addListenerForSingleValueEvent(new ValueEventListener() {//Single data load
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot s1 : snapshot.getChildren()) {
+                   PlayerList.add(String.valueOf(s1.getValue()));
+                }
+                Collections.shuffle(PlayerList);
+                SplitTeams(PlayerList);
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+    public void SplitTeams(ArrayList<String> List){
+        Team NewTeam = new Team();
+        for (int i = 0; i < List.size(); i++){
+            if(i == 0){ NewTeam.setLeaderID(List.get(i));NewTeam.AddSize();}
+            if (i == 1){NewTeam.setPlayer2ID(List.get(i));NewTeam.AddSize();}
+            if (i == 2){NewTeam.setPlayer3ID(List.get(i));NewTeam.AddSize();}
+            if (i == 3){NewTeam.setPlayer4ID(List.get(i));NewTeam.AddSize();break;}
+        }
+        TeamList.add(NewTeam);
+        if (NewTeam.getSize() == 4){
+            for (int i = 1; i <= 4; i++){
+                List.remove(0);
+            }
+            SplitTeams(List);
+        }
+        else{
+            List.clear();
+        }
+    }
+
+    public void SetTeam(){
+
     }
 }

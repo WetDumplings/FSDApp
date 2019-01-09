@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 
 public class selectmenu extends AppCompatActivity {
 
@@ -119,6 +121,9 @@ public class selectmenu extends AppCompatActivity {
                         mEditor.putString("AndroidID",android_id);
                         mEditor.commit();
                         Log.d("myTag", "This is my message");
+                        HashMap<String, Object> Member = new HashMap<>();
+                        Member.put(android_id,android_id);
+                        defReference.child(String.valueOf(eventID)).child("Players").updateChildren(Member);
                         Intent intent = new Intent(getApplicationContext(), normaluserwaitingscreen.class);
 
                         startActivity(intent);
