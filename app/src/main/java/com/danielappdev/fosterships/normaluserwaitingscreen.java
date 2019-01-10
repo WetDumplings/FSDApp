@@ -43,13 +43,13 @@ public class normaluserwaitingscreen extends AppCompatActivity {
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         ConstraintLayout rlayout = (ConstraintLayout) findViewById(R.id.normaluserswaitingscreenlayout);
-        rlayout.setOnClickListener(new View.OnClickListener() {
+        /*rlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),authentication.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         Button nexttip = (Button) findViewById(R.id.btnnextfact);
         nexttip.setOnClickListener(new View.OnClickListener() {
@@ -65,14 +65,28 @@ public class normaluserwaitingscreen extends AppCompatActivity {
 
 
 
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(2, 1) {
 
             public void onTick(long millisUntilFinished) {
 
             }
 
             public void onFinish() {
+                eventID = mPref.getInt("EventID",0);
+                defReference.child(String.valueOf(eventID)).addListenerForSingleValueEvent(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        TextView tvnextfact1 = findViewById(R.id.tvfact);
+                       if(String.valueOf(snapshot.child("GameStatus").getValue()).equals("Ready")){
+                           Intent intent = new Intent(getApplicationContext(),authentication.class);
+                           startActivity(intent);
+                       }
 
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
                 /*String[] Roles = {"Player"};
                 Random r = new Random();
                 String playerrole = Roles[r.nextInt(Roles.length)];
@@ -98,7 +112,7 @@ public class normaluserwaitingscreen extends AppCompatActivity {
     }
 
 
-    public void GetPlayers(){
+    /*ublic void GetPlayers(){
         eventID = mPref.getInt("EventID",0);
         defReference.child(String.valueOf(eventID)).child("Players").addListenerForSingleValueEvent(new ValueEventListener() {//Single data load
             @Override
@@ -139,5 +153,5 @@ public class normaluserwaitingscreen extends AppCompatActivity {
 
     public void SetTeam(){
 
-    }
+    }*/
 }

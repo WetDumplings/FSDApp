@@ -51,7 +51,11 @@ public class selectmenu extends AppCompatActivity {
         btnAdminPage = findViewById(R.id.btnAdminPage);
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
         textview2 = findViewById(R.id.textView2);
-
+        String android_id = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        HashMap<String, Object> Member = new HashMap<>();
+        Member.put("Player",android_id);
+        defReference.child(String.valueOf("3518")).child("Teams").child("Team banana").child("Members").updateChildren(Member);
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

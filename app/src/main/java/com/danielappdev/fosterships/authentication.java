@@ -1,27 +1,27 @@
 package com.danielappdev.fosterships;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.annotation.SuppressLint;
+        import android.content.Intent;
+        import android.content.SharedPreferences;
+        import android.os.CountDownTimer;
+        import android.preference.PreferenceManager;
+        import android.provider.Settings;
+        import android.support.constraint.ConstraintLayout;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ImageView;
+        import android.widget.TextView;
 
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ValueEventListener;
 
 public class authentication extends AppCompatActivity {
 
@@ -48,7 +48,7 @@ public class authentication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-         EventRef = database.getReference(String.valueOf("Events"));
+        EventRef = database.getReference(String.valueOf("Events"));
         //ConstraintLayout CS_Auth = findViewById(R.id.CS_Auth);
         authcode = findViewById(R.id.etAuthCode);
         Instructions = findViewById(R.id.textView11);
@@ -85,19 +85,20 @@ public class authentication extends AppCompatActivity {
 
     private void CheckAuthKey(final DatabaseReference reference, final String authCodetoCheck) {
         final String Tname = (String.valueOf(texts.getText()).replace("You are in ",""));
+        Log.d("name", Tname);
         reference.child(String.valueOf(EventID)).child("Teams").child(Tname).addListenerForSingleValueEvent(new ValueEventListener() {//Single data load
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot.child("TeamAuthCode").exists()){
-                if(String.valueOf(snapshot.child("TeamAuthCode").getValue()).equals(authCodetoCheck)){
-                    int NumOfAuth =  snapshot.child("NoOfAuths").getValue(Integer.class);
-                    EventRef.child(String.valueOf(EventID)).child("Teams").child(Tname).child("NoOfAuths").setValue(NumOfAuth+1);
-                    CheckTeamAuthNO();
-                    authcode.setVisibility(View.INVISIBLE);
-                    btnStart.setVisibility(View.INVISIBLE);
-                    AuthText.setVisibility(View.VISIBLE);
-                    AuthText.setText("Not everyone has logged in");
-                }
+                    if(String.valueOf(snapshot.child("TeamAuthCode").getValue()).equals(authCodetoCheck)){
+                        int NumOfAuth =  snapshot.child("NoOfAuths").getValue(Integer.class);
+                        EventRef.child(String.valueOf(EventID)).child("Teams").child(Tname).child("NoOfAuths").setValue(NumOfAuth+1);
+                        CheckTeamAuthNO();
+                        authcode.setVisibility(View.INVISIBLE);
+                        btnStart.setVisibility(View.INVISIBLE);
+                        AuthText.setVisibility(View.VISIBLE);
+                        AuthText.setText("Not everyone has logged in");
+                    }
                 }
 
             }
