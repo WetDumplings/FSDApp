@@ -56,6 +56,7 @@ public class selectmenu extends AppCompatActivity {
         HashMap<String, Object> Member = new HashMap<>();
         Member.put("Player",android_id);
         defReference.child(String.valueOf("3518")).child("Teams").child("Team banana").child("Members").updateChildren(Member);
+        Log.d("t", android_id);
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
